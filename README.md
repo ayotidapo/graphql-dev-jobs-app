@@ -1,3 +1,3 @@
-# GraphQL Job Board
+# graphql-dev-jobs-app
 
-Sample application used in the GraphQL by Example course.
+Sample application using graphql and react. Apollo-express-server used on the backend while react handles the frontend logic.
