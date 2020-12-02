@@ -99,7 +99,7 @@ export const createJob = async (body) => {
 export const getAllJobs = async () => {
   const {
     data: { jobs },
-  } = await client.query({ query: getAllJobsQuery });
+  } = await client.query({ query: getAllJobsQuery, fetchPolicy: "no-cache" });
   return jobs;
 };
 
