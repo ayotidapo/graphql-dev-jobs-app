@@ -36,20 +36,45 @@ const getJobQuery = gql`
   }
 `;
 
-export const createJob = async (body) => {
-  const mutation = gql`
-    mutation createAJob($input: CreateJobInput) {
-      job: createJob(inputt: $input) {
+const createJobMutation = gql`
+  mutation createAJob($input: CreateJobInput) {
+    job: createJob(inputt: $input) {
+      id
+      title
+      description
+      company {
+        id
+      }
+    }
+  }
+`;
+
+const getAllJobsQuery = gql`
+  query AllJobs {
+    jobs {
+      id
+      title
+      description
+    }
+  }
+`;
+
+const getACompanyQuery = gql`
+  query getACompany {
+    jobs {
+      id
+      name
+      description
+      jobs {
         id
         title
         description
-        company {
-          id
-        }
       }
     }
-  `;
+  }
+`;
 
+export const createJob = async (body) => {
   const variables = {
     input: body,
   };
@@ -57,7 +82,7 @@ export const createJob = async (body) => {
   const {
     data: { job },
   } = await client.mutate({
-    mutation,
+    mutation: createJobMutation,
     variables,
     update: (cache, mutationData) => {
       const { data } = mutationData;
@@ -72,27 +97,44 @@ export const createJob = async (body) => {
 };
 
 export const getAllJobs = async () => {
-  const query = gql`
-    query {
-      jobs {
-        id
-        title
-        description
-      }
-    }
-  `;
-
   const {
     data: { jobs },
-  } = await client.query({ query });
+  } = await client.query({ query: getAllJobsQuery });
   return jobs;
 };
 
 export const getAJob = async (id) => {
-  const query = getJobQuery;
-
   const {
     data: { job },
-  } = await client.query({ query, variables: { id } });
+  } = await client.query({ query: getJobQuery, variables: { id } }); //await client.query({ query,fetchPolicy:'no-cache', variables: { id } });
   return job;
 };
+
+export const getACompany = async (id) => {
+  const {
+    data: { company },
+  } = await client.query({ query: getACompanyQuery, variables: { id } });
+  return company;
+};
+
+//
+//
+//
+//disable cache for entire-app
+// const defaultOptions: DefaultOptions = {
+//   watchQuery: {
+//     fetchPolicy: 'no-cache',
+//     errorPolicy: 'ignore',
+//   },
+//   query: {
+//     fetchPolicy: 'no-cache',
+//     errorPolicy: 'all',
+//   },
+// }
+
+// const client = new ApolloClient({
+// link: concat(authMiddleware, httpLink),
+// cache: new InMemoryCache(),
+// defaultOptions: defaultOptions,
+
+// });
