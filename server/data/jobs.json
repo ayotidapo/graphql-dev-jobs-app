@@ -7,7 +7,7 @@
   },
   {
     "id": "SJRAZDu_z",
-    "companyId": "HJRa-DOuG",
+    "companyId": "SJV0-wdOM",
     "title": "Backend Developer",
     "description": "We are looking for a Backend Developer familiar with Node.js and Express."
   },
@@ -19,56 +19,8 @@
   },
   {
     "id": "HJG4RmqNv",
-    "title": "NewJob",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "rycVRmqED",
-    "title": "NewJob2",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "rJ6vW4cNv",
-    "title": "Full Job",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "BkLObVqED",
-    "title": "Full Job",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "SJdwM4cNw",
-    "title": "Full Job",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "Bk82fV54w",
-    "title": "Full Job",
-    "description": "I created this, Ma foh!",
-    "companyId": "HJRa-DOuG"
-  },
-  {
-    "id": "BypN7V94w",
-    "title": "NewJob",
-    "description": "I created this, Ma foh!",
-    "companyId": "SJV0-wdOM"
-  },
-  {
-    "id": "HkSImV9Ev",
-    "title": "NewJob",
-    "description": "I created this, Ma foh!",
-    "companyId": "SJV0-wdOM"
-  },
-  {
-    "id": "Sywx7Nrjv",
-    "title": "New one",
-    "description": "okay!",
+    "title": "UI/Ux",
+    "description": "Yes! Can you use Figma well",
     "companyId": "HJRa-DOuG"
   }
 ]
