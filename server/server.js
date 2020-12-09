@@ -5,15 +5,10 @@ const resolvers = require("./resolvers");
 const cors = require("cors");
 const express = require("express");
 const expressJwt = require("express-jwt");
-<<<<<<< HEAD
-const jwt = require("jsonwebtoken");
-const db = require("./db");
-=======
 //const authenticate = require("./Function/auth");
 const jwt = require("jsonwebtoken");
 const db = require("./db");
 
->>>>>>> apolloMigrate
 // console.log(
 //   jwt.decode(
 //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCSnJwLUR1ZEciLCJpYXQiOjE2MDAxODE5MTF9.3mGYzwPRhIqts4Q4B2_tmJfAdT2ptPgO0I0m8SEutd8"
@@ -33,11 +28,7 @@ app.use(
     credentialsRequired: false,
   })
 );
-<<<<<<< HEAD
-
-=======
 //const context = ({ req }) => { console.log(req.headers.authorization); return { user: authenticate(req.headers.authorization), method: req.method } }//
->>>>>>> apolloMigrate
 const context = ({ req }) => ({ user: req.user, method: req.method });
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context });

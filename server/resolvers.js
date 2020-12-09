@@ -19,7 +19,7 @@ const Mutation = {
 
 const Company = {
   jobs: (company) =>
-    db.jobs.list().filter((job) => job.companyId === company._id),
+    db.jobs.list().filter((job) => job.companyId === company.id),
 };
 
 const Job = {

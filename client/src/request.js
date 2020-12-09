@@ -67,8 +67,8 @@ const getAllJobsQuery = gql`
 `;
 
 const getACompanyQuery = gql`
-  query getACompany {
-    jobs {
+  query getACompany($id:ID!){
+    company(id:$id) {
       id
       name
       description
