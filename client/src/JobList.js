@@ -8,15 +8,12 @@ export class JobList extends Component {
   };
   async componentDidMount() {
     const jobs = await getAllJobs();
+    console.log(jobs)
     this.setState({ jobs });
   }
 
-  render() {
-    const { jobs } = this.state;
-    return <ul className='box'>{jobs.map(this.renderJob.bind(this))}</ul>;
-  }
-
   renderJob(job) {
+    console.log(this.state.jobs)
     const title = job.company
       ? `${job.title} at ${job.company.name}`
       : job.title;
@@ -28,6 +25,14 @@ export class JobList extends Component {
       </li>
     );
   }
+  render() {
+
+    const { jobs } = this.state;
+    console.log(jobs)
+    return <ul className='box'>{jobs.map(this.renderJob.bind(this))}</ul>;
+  }
+
+
 }
 
 
