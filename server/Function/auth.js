@@ -4,10 +4,10 @@ const jwtSecret = Buffer.from("Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt", "base64");
 
 
 
-
 const authenticate = (token) => {
     if (token) {
-        const decoded = jwt.verify(token, jwtSecret);
+        const value = token.split(`Bearer `).pop()
+        const decoded = jwt.verify(value, jwtSecret);
         if (!decoded) return null
         return {
             ...decoded

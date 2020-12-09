@@ -5,7 +5,7 @@ const resolvers = require("./resolvers");
 const cors = require("cors");
 const express = require("express");
 const expressJwt = require("express-jwt");
-const authenticate = require("./Function/auth");
+//const authenticate = require("./Function/auth");
 const jwt = require("jsonwebtoken");
 const db = require("./db");
 
@@ -23,13 +23,13 @@ const app = express();
 app.use(
   cors(),
   bodyParser.json(),
-  // expressJwt({
-  //   secret: jwtSecret,
-  //   credentialsRequired: false,
-  // })
+  expressJwt({
+    secret: jwtSecret,
+    credentialsRequired: false,
+  })
 );
-
-const context = ({ req }) => ({ user: authenticate(req.headers.authorization), method: req.method })
+//const context = ({ req }) => { console.log(req.headers.authorization); return { user: authenticate(req.headers.authorization), method: req.method } }//
+const context = ({ req }) => ({ user: req.user, method: req.method });
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
 apolloServer.applyMiddleware({ app, path: "/graphql" });
