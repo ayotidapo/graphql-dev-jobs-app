@@ -7,26 +7,26 @@ import { JobBoard } from './JobBoard';
 import { JobDetail } from './JobDetail';
 import { JobForm } from './JobForm';
 import { NavBar } from './NavBar';
-
+import './index.css'
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {loggedIn: isLoggedIn()};
+    this.state = { loggedIn: isLoggedIn() };
   }
 
   handleLogin() {
-    this.setState({loggedIn: true});
+    this.setState({ loggedIn: true });
     this.router.history.push('/');
   }
 
   handleLogout() {
     logout();
-    this.setState({loggedIn: false});
+    this.setState({ loggedIn: false });
     this.router.history.push('/');
   }
 
   render() {
-    const {loggedIn} = this.state;
+    const { loggedIn } = this.state;
     return (
       <Router ref={(router) => this.router = router}>
         <div>

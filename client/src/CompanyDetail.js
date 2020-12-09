@@ -23,7 +23,7 @@ export class CompanyDetail extends Component {
         <div className="box">{company.description}</div>
         <h2>Jobs</h2>
         <ul className='box'>
-          {company.jobs.map((job) => <li className='media' key={job.id} onClick={() => this.props.history.push(`/jobs/${job.id}`)} >{job.title}</li>)}
+          {company.jobs.map((job) => <li className='media hand' key={job.id} onClick={() => this.props.history.push(`/jobs/${job.id}`)} >{job.title}</li>)}
         </ul>
 
       </div>
