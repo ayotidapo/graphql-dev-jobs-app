@@ -1,13 +1,16 @@
-const bodyParser = require("body-parser");
-const { ApolloServer } = require("apollo-server-express");
+
+const { ApolloServer } = require("apollo-server");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
-const cors = require("cors");
-const express = require("express");
-const expressJwt = require("express-jwt");
 //const authenticate = require("./Function/auth");
+const connectDB = require('./DBconfig/db');
 const jwt = require("jsonwebtoken");
 const db = require("./db");
+const dotenv = require("dotenv");
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 // console.log(
 //   jwt.decode(
@@ -15,40 +18,38 @@ const db = require("./db");
 //   )
 // );
 
-const port = 9000;
+connectDB(process.env.MONGO_URI)
+
 const jwtSecret = Buffer.from("Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt", "base64");
 
-const app = express();
 
-app.use(
-  cors(),
-  bodyParser.json(),
-  expressJwt({
-    secret: jwtSecret,
-    credentialsRequired: false,
-  })
-);
+
+
 //const context = ({ req }) => { console.log(req.headers.authorization); return { user: authenticate(req.headers.authorization), method: req.method } }//
 const context = ({ req }) => ({ user: req.user, method: req.method });
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
-apolloServer.applyMiddleware({ app, path: "/graphql" });
 
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  const user = db.users.list().find((user) => user.email === email);
-  if (!(user && user.password === password)) {
-    res.sendStatus(401);
-    return;
-  }
-  const token = jwt.sign(
-    { sub: user.id, companyId: user.companyId },
-    jwtSecret
-  );
-  res.send({ token });
+
+// app.post("/login", (req, res) => {
+//   const { email, password } = req.body;
+//   const user = db.users.list().find((user) => user.email === email);
+//   if (!(user && user.password === password)) {
+//     res.sendStatus(401);
+//     return;
+//   }
+//   const token = jwt.sign(
+//     { sub: user.id, companyId: user.companyId },
+//     jwtSecret
+//   );
+//   res.send({ token });
+// });
+
+
+apolloServer.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
 });
 
-app.listen(port, () => console.info(`Server started on port ${port}`));
 
 // export const setBaseUrlAndHeaders = () => {
 //   axios.defaults.baseURL = BACKEND_URL + '/v2/';

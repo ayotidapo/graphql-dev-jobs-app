@@ -1,8 +1,10 @@
 const db = require("./db");
+const Gig = require('./models/Gig');
+const User = require('./models/User');
 
 const Query = {
   job: (_root, { id }) => db.jobs.get(id),
-  jobs: () => db.jobs.list(),
+  jobs: () => Gig.find(),
   company: (_root, { id }) => db.companies.get(id),
 };
 
@@ -15,6 +17,21 @@ const Mutation = {
     const jobId = db.jobs.create({ ...inputt, companyId: user.companyId });
     return db.jobs.get(jobId);
   },
+  login(_root, { input }) {
+
+
+    return 'user'
+  },
+
+  async createUser(_root, { input }) {
+    const { email, password } = input
+    const user = new User({
+      email,
+      password
+    });
+    await user.save();
+    return user
+  }
 };
 
 const Company = {

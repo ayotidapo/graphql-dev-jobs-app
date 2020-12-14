@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from "apollo-boost";
 import gql from "graphql-tag";
-const graphQlUrl = `http://localhost:9000/graphql`;
+const graphQlUrl = `http://localhost:4000/graphql`;
 
 const authLink = new ApolloLink((operation, forward) => {
   if (localStorage.accessToken)
