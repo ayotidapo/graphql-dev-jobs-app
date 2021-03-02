@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from "apollo-boost";
 import gql from "graphql-tag";
-const graphQlUrl = `http://localhost:4000/graphql`;
+const graphQlUrl = `http://localhost:4000`;
 
 const authLink = new ApolloLink((operation, forward) => {
   if (localStorage.accessToken)
@@ -21,10 +21,6 @@ const client = new ApolloClient({
   link: ApolloLink.from([authLink, new HttpLink({ uri: graphQlUrl })]),
   cache: new InMemoryCache(),
 });
-
-
-
-
 
 const jobDetailFragment = gql`
   fragment JobDetail on Job {
@@ -56,6 +52,12 @@ const createJobMutation = gql`
   ${jobDetailFragment}
 `;
 
+const loginMutation = gql`
+  mutation loginUser($input: LoginInput) {
+    token: login(input: $input)
+  }
+`;
+
 const getAllJobsQuery = gql`
   query AllJobs {
     jobs {
@@ -67,8 +69,8 @@ const getAllJobsQuery = gql`
 `;
 
 const getACompanyQuery = gql`
-  query getACompany($id:ID!){
-    company(id:$id) {
+  query getACompany($id: ID!) {
+    company(id: $id) {
       id
       name
       description
@@ -110,9 +112,8 @@ export const getAllJobs = async () => {
     } = await client.query({ query: getAllJobsQuery, fetchPolicy: "no-cache" });
     return jobs;
   } catch (e) {
-    console.log(`Error:${e}`)
+    console.log(`Error:${e}`);
   }
-
 };
 
 export const getAJob = async (id) => {
@@ -127,6 +128,22 @@ export const getACompany = async (id) => {
     data: { company },
   } = await client.query({ query: getACompanyQuery, variables: { id } });
   return company;
+};
+
+export const loginUser = async (body) => {
+  //try {
+  const {
+    data: { token },
+  } = await client.mutate({
+    mutation: loginMutation,
+    variables: { input: body },
+  });
+  localStorage.setItem("accessTokenKey", token);
+  return token;
+  // } catch (error) {
+  //   console.log(error.graphQLErrors.map((x) => x.message).join(','))
+  //   return 'Unathourised'
+  // }
 };
 
 //

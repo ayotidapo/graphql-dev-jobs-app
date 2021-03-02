@@ -2,7 +2,7 @@
 const { ApolloServer } = require("apollo-server");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
-//const authenticate = require("./Function/auth");
+const auth = require("./Function/auth");
 const connectDB = require('./DBconfig/db');
 const jwt = require("jsonwebtoken");
 const db = require("./db");
@@ -12,23 +12,20 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-// console.log(
-//   jwt.decode(
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCSnJwLUR1ZEciLCJpYXQiOjE2MDAxODE5MTF9.3mGYzwPRhIqts4Q4B2_tmJfAdT2ptPgO0I0m8SEutd8"
-//   )
-// );
+
 
 connectDB(process.env.MONGO_URI)
 
-const jwtSecret = Buffer.from("Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt", "base64");
+const { authenticate } = auth
 
+const context = ({ req }) => ({ user: authenticate(req.headers.authorization), method: req.method })//
 
-
-
-//const context = ({ req }) => { console.log(req.headers.authorization); return { user: authenticate(req.headers.authorization), method: req.method } }//
-const context = ({ req }) => ({ user: req.user, method: req.method });
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
+
+apolloServer.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
 
 
 // app.post("/login", (req, res) => {
@@ -45,10 +42,6 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers, context });
 //   res.send({ token });
 // });
 
-
-apolloServer.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
 
 
 // export const setBaseUrlAndHeaders = () => {
